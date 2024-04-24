@@ -27,17 +27,21 @@ const handleMavLinkData = () => {
 
             //process the parsed data based on type
             switch(clazz.name){
-                case 'GLOBAL_POSITION_INT':
+                case 'GPS_POSITION_INT':
                     processGlobalPositionMessage(data);
                     break; 
+                case 'NAMED_FLOAT':
+                    processCustomMessage(data); 
+                    break; 
             }
+
             //send parsed data to the server
             sendMavLinkDataToServer(data);  
         }
     });
 };
 
-//process and send data to server 
+//process gps coordinates and send to server
 const processGlobalPositionMessage = (data) => {
 
     const globalPositionData = {
@@ -54,5 +58,14 @@ const processGlobalPositionMessage = (data) => {
 
     updateMavLinkData(globalPositionData);
 }
+
+const processCustomMessage = (data) => {
+
+    const SmokeTemperatureData = {
+        smoke: data.gas,
+        temperature: data.temp
+    }
+    updateMavLinkData(SmokeTemperatureData);
+};
 
 export { handleMavLinkData }; 
