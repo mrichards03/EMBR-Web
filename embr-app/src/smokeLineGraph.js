@@ -50,11 +50,6 @@ function SmokeLineGraph() {
         maintainAspectRatio: false,
       }
   
-      // Destroy previous chart instance if exists
-
-  
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  
     return (
       <div className='smoke-graph'>
         <Line data={data} options = {options} />
