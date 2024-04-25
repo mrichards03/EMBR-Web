@@ -5,7 +5,6 @@ import SmokeLineGraph from "./smokeLineGraph";
 import TemperatureGraph from "./temperatureGraph";
 import CameraStream from "./fpvStream";
 import logo from "./res/Logo-01.png"
-import { Line } from "react-chartjs-2";
 
 function App() {
   const [gpsData, setGpsData] = useState(null);
@@ -14,7 +13,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:300/api/mavlink-data");
+        const response = await fetch('http://localhost:300/api/mavlink-data');
         if (!response.ok) {
           throw new Error("failed to fecth Mavlink data");
         }

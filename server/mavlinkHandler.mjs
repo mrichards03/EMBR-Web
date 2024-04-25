@@ -62,7 +62,8 @@ const processGlobalPositionMessage = (data) => {
 const processCustomMessage = (data) => {
 
     const SmokeTemperatureData = {
-        smoke: data.gas,
+        timestamp: data.time._boot_ms,
+        smokeLevel: data.gas,
         temperature: data.temp
     }
     updateMavLinkData(SmokeTemperatureData);
