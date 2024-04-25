@@ -1,7 +1,17 @@
-import { SerialPort } from 'serialport'
-import { MavLinkPacketSplitter, MavLinkPacketParser, MavLinkPacketRegistry, minimal, common, ardupilotmega } from 'node-mavlink'
+import SerialPort from 'serialport'
+import mavlink from 'node-mavlink'
 import fetch from 'node-fetch'; 
-import { updateMavLinkData } from './server';
+import { updateMavLinkData } from './server.mjs';
+
+
+const {
+  MavLinkPacketSplitter,
+  MavLinkPacketParser,
+  MavLinkPacketRegistry,
+  minimal,
+  common,
+  ardupilotmega
+} = mavlink;
 
 //create a registry of mappings between msg id and data 
 const REGISTRY = {
@@ -11,9 +21,12 @@ const REGISTRY = {
   };
 
 // substitute /dev/ttyACM0 with your serial port!
-const handleMavLinkData = () => {
-    const port = new SerialPort('/dev/ttyACM0', {
-        baudRate: 115200
+const portSerialNumber = 'COM5';
+
+function handleMavLinkData()  {
+    const port = new SerialPort(portSerialNumber, {
+        baudRate: 57600, 
+        path: portSerialNumber
     });
 
     // constructing a reader that will emit each packet separately
@@ -42,7 +55,7 @@ const handleMavLinkData = () => {
 };
 
 //process gps coordinates and send to server
-const processGlobalPositionMessage = (data) => {
+function processGlobalPositionMessage (data) {
 
     const globalPositionData = {
         timestamp: data.time._boot_ms, 
@@ -59,7 +72,7 @@ const processGlobalPositionMessage = (data) => {
     updateMavLinkData(globalPositionData);
 }
 
-const processCustomMessage = (data) => {
+function processCustomMessage (data) {
 
     const SmokeTemperatureData = {
         timestamp: data.time._boot_ms,

@@ -91,9 +91,6 @@ function TemperatureGraph() {
   };
 
   // Destroy previous chart instance if exists
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
   return (
     <div className="smoke-graph">
       {tempData && <Line data={tempData} options={options} />}
