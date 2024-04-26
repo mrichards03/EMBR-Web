@@ -1,6 +1,6 @@
 import "./App.css";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+// import Button from "react-bootstrap/Button";
+// import Modal from "react-bootstrap/Modal";
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
@@ -16,11 +16,11 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Legend);
 
 function TemperatureGraph() {
   const [tempData, setTempData] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     //fetch smoke data from the api
-    fetch("http://localhost:300/api/mavlink-data")
+    fetch("http://localhost:3000/api/mavlink-data")
       .then((response) => response.json())
       .then((data) => {
         //parse the response to populate the graph
@@ -40,12 +40,12 @@ function TemperatureGraph() {
         };
         setTempData(tempData);
 
-        const threshold = 50;
-        const latestTempLevel = tempData[tempData.length - 1].temperature;
-        if (latestTempLevel > threshold) {
-          //alert('Smoke level exceed 50C!');
-          setShowModal(true);
-        }
+        // const threshold = 50;
+        // const latestTempLevel = tempData[tempData.length - 1].temperature;
+        // if (latestTempLevel > threshold) {
+        //   //alert('Smoke level exceed 50C!');
+        //   setShowModal(true);
+        // }
       })
       .catch((error) => {
         console.error("Error fetching temperature data:", error);
@@ -96,7 +96,7 @@ function TemperatureGraph() {
       {tempData && <Line data={tempData} options={options} />}
 
       {/* Modal component */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      {/* <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             EMBR Alert
@@ -111,11 +111,11 @@ function TemperatureGraph() {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setShowModal(false)}>
+          <Button >
             Close
             </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

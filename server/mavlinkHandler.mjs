@@ -1,7 +1,7 @@
-import SerialPort from 'serialport'
+import { SerialPort } from 'serialport'
 import mavlink from 'node-mavlink'
 import fetch from 'node-fetch'; 
-import { updateMavLinkData } from './server.mjs';
+import { updateMavLinkData } from './server.mjs'
 
 
 const {
@@ -21,16 +21,15 @@ const REGISTRY = {
   };
 
 // substitute /dev/ttyACM0 with your serial port!
-const portSerialNumber = 'COM5';
 
 function handleMavLinkData()  {
-    const port = new SerialPort(portSerialNumber, {
-        baudRate: 57600, 
-        path: portSerialNumber
-    });
+    //serialPort.close();
+    const portSerialNumber = '\\\\.\\COM5';
 
-    // constructing a reader that will emit each packet separately
-    const mavlinkRead = SerialPort.pipe(new MavLinkPacketSplitter()).pipe(new MavLinkPacketParser()); 
+    const serialPort = new SerialPort({ path: portSerialNumber, baudRate: 57600 });
+
+    //constructing a reader that will emit each packet separately
+    const mavlinkRead = serialPort.pipe(new MavLinkPacketSplitter()).pipe(new MavLinkPacketParser()); 
     
     //setup mavlink to listen for packets
     mavlinkRead.on('data', packet => {
@@ -46,12 +45,15 @@ function handleMavLinkData()  {
                 case 'NAMED_FLOAT':
                     processCustomMessage(data); 
                     break; 
+                default:
+                    console.log('Unknown message type:', clazz.name);
             }
-
-            //send parsed data to the server
-            sendMavLinkDataToServer(data);  
+            sendMavLinkDataToServer(data);
         }
     });
+
+    mavlinkRead.on('error', error => {console.error('Error reading Mavlink data:', error);})
+    
 };
 
 //process gps coordinates and send to server
@@ -79,7 +81,26 @@ function processCustomMessage (data) {
         smokeLevel: data.gas,
         temperature: data.temp
     }
+
     updateMavLinkData(SmokeTemperatureData);
 };
+
+// Function to send data to the server
+async function sendMavLinkDataToServer(data) {
+    try {
+      const response = await fetch('http://localhost:3000/api/mavlink-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to send MAVLink data to server: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Error sending MAVLink data to server:', error);
+    }
+  }
 
 export { handleMavLinkData }; 

@@ -24,9 +24,20 @@ function SmokeLineGraph() {
 
   useEffect(() => {
     //fetch smoke data from the api 
-    fetch('http://localhost:300/api/mavlink-data')
-    .then(response => response.json())
+    fetch('http://localhost:3000/api/mavlink-data')
+    .then(response => {
+      if(!response.ok){
+        throw new Error('Failed to fetch smoke data'); 
+      }
+      return response.json();
+
+    })
     .then(data => {
+      console.log('Received smoke data:', data)
+
+      if(!Array.isArray(data)){
+        throw new Error('Received smoke data:', data);
+      }
       //parse the response to populate the graph
       const smokeData = {
         labels: data.map(entry => entry.timestamp),

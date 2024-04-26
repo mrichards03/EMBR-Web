@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:300/api/mavlink-data');
+        const response = await fetch('http://localhost:3000/api/mavlink-data');
         if (!response.ok) {
           throw new Error("failed to fecth Mavlink data");
         }
@@ -32,11 +32,11 @@ function App() {
     //state to store MAVLink gps data
     
     <div className="dashboard-container">
-      <div class="row">
-      <div class="col-lg-3 justify-content-end logo-container">
-        <img src={logo} alt="Logo" class="logo float-right"/>
+      <div className="row">
+      <div className="col-lg-3 justify-content-end logo-container">
+        <img src={logo} alt="Logo" className="logo float-right"/>
       </div>
-      <div class="col-lg-6 title-container">
+      <div className="col-lg-6 title-container">
         <h1 className="title">EMBR Dashboard</h1>
       </div>
       </div>
