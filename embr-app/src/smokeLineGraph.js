@@ -1,22 +1,18 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import { Line } from 'react-chartjs-2';
+import "./App.css";
+// import Button from "react-bootstrap/Button";
+// import Modal from "react-bootstrap/Modal";
+import React, { useState, useEffect } from "react";
+import { Line } from "react-chartjs-2";
 import {
-    Chart as ChartJS,
-    LineElement,
-    CategoryScale, //x axis
-    LinearScale, //y axis
-    PointElement,
-    Legend
-} from 'chart.js';
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale, //x axis
+  LinearScale, //y axis
+  PointElement,
+  Legend,
+} from "chart.js";
 
-ChartJS.register(
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    Legend
-)
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Legend);
 
 
 function SmokeLineGraph() {
@@ -33,18 +29,17 @@ function SmokeLineGraph() {
 
     })
     .then(data => {
-      console.log('Received smoke data:', data)
-
-      if(!Array.isArray(data)){
-        throw new Error('Received smoke data:', data);
-      }
+      const smokeEntries = data.filter(entry => entry.type === 'smoke_data');
+      const smokeLabels = smokeEntries.map(entry => entry.timestamp / 1000);
+      const smokeDataMap = smokeEntries.map(entry => entry.smokeLevel); 
+      
       //parse the response to populate the graph
       const smokeData = {
-        labels: data.map(entry => entry.timestamp),
+        labels: smokeLabels,
         datasets: [
         {
           label: 'Smoke Level',
-          data: data.map(entry => entry.smokeLevel),
+          data: smokeDataMap,
           fill: false,
           borderColor: '#EE2A24',
           backgroundColor: '#F8B522',
@@ -61,32 +56,26 @@ function SmokeLineGraph() {
     })
   })
 
-      // Fake data for demonstration
-      // const data = {
-      //   labels: ['5 minutes', '10 minutes', '15 minutes', '20 minutes', '25 minutes', '30 minutes', '35 minutes'],
-      //   datasets: [
-      //     {
-      //       label: 'Smoke Data',
-      //       data: [65, 59, 80, 81, 56, 55, 40],
-      //       fill: false,
-      //       borderColor: '#EE2A24',
-      //       backgroundColor: '#F8B522',
-      //       pointBorderColor: '#EE2A24',
-      //       tension: 0.1
-      //     },
-      //   ],
-      // };
-
       const options = {
         plugins: {
-            Legend: true
-        }, 
+          Legend: true,
+        },
         scales: {
-            y: {
-                min: 40,
-                max: 85
-            }
-        }, 
+          y: {
+            min: 10000,
+            max: 250000,
+            gridLines: {
+              display: false,
+              color: "transparent",
+            },
+          },
+          x: {
+            gridLines: {
+              display: false,
+              color: "transparent",
+            },
+          },
+        },
         responsive: true,
         maintainAspectRatio: false,
       }

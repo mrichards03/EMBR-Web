@@ -70,12 +70,10 @@ function App() {
           <div className="col empty-container"></div>
           <div className="col gps-container">
             <h2>Latest GPS Data</h2>
-            <h5>Latitude: 48G </h5>
-            <h5>Longitude: 49G </h5>
-            {gpsData && (
+            {gpsData && gpsData.length > 0 && (
               <div>
-                <h3>Latitude: {gpsData[gpsData.length - 1].latitude}</h3>
-                <h3>Longitude: {gpsData[gpsData.length - 1].longitude}</h3>
+                <h3>Latitude: {gpsData[gpsData.length - 2].latitude}</h3>
+                <h3>Longitude: {gpsData[gpsData.length - 2].longitude}</h3>
               </div>
             )}
           </div>

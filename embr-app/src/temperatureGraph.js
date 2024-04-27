@@ -21,15 +21,25 @@ function TemperatureGraph() {
   useEffect(() => {
     //fetch smoke data from the api
     fetch("http://localhost:3000/api/mavlink-data")
-      .then((response) => response.json())
+    .then(response => {
+      if(!response.ok){
+        throw new Error('Failed to fetch smoke data'); 
+      }
+      return response.json();
+
+    })
       .then((data) => {
         //parse the response to populate the graph
         const tempData = {
-          labels: data.map((entry) => entry.timestamp),
+          labels: data.map((entry) => {
+            if(entry.type === 'temp_data'){
+            return entry.timestamp;
+          }
+        return null;}),
           datasets: [
             {
-              label: "Smoke Level",
-              data: data.map((entry) => entry.temperature),
+              label: "Temperature Level",
+              data: data.map((entry) => {if(entry.type === 'temp_data'){return entry.temperature} return null;}),
               fill: false,
               borderColor: "#F8B522",
               backgroundColor: "#EE2A24",
@@ -52,21 +62,6 @@ function TemperatureGraph() {
       });
   });
 
-  // Fake data for demonstration
-  // const data = {
-  //   labels: ['5 minutes', '10 minutes', '15 minutes', '20 minutes', '25 minutes', '30 minutes', '35 minutes'],
-  //   datasets: [
-  //     {
-  //       label: 'Temperature Data',
-  //       data: [65, 59, 80, 81, 56, 55, 40],
-  //       fill: false,
-  //       borderColor: '#F8B522',
-  //       backgroundColor: '#EE2A24',
-  //       pointBorderColor: '#F8B522',
-  //       tension: 0.1
-  //     },
-  //   ],
-  // };
 
   const options = {
     plugins: {
