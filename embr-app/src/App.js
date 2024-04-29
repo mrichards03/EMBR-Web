@@ -5,6 +5,7 @@ import SmokeLineGraph from "./smokeLineGraph";
 import TemperatureGraph from "./temperatureGraph";
 import CameraStream from "./fpvStream";
 import logo from "./res/Logo-01.png"
+import CustomWebcam from "./CustomWebcam";
 
 function App() {
   const [gpsData, setGpsData] = useState(null);
@@ -51,7 +52,7 @@ function App() {
 
           {/* FPV camera feed */}
           <div className=" col fpv-container">
-            <CameraStream />
+            <CustomWebcam />
           </div>
           {/* Flir camera feed */}
           <div className="col flir-container">
