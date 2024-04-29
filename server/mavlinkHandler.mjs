@@ -23,11 +23,11 @@ const REGISTRY = {
 
 function handleMavLinkData() {
   //serialPort.close();
-  const portSerialNumber = "\\\\.\\COM5";
+  const portSerialNumber = "\\\\.\\COM18";
 
   const serialPort = new SerialPort({
     path: portSerialNumber,
-    baudRate: 57600,
+    baudRate: 1200,
   });
 
   //constructing a reader that will emit each packet separately
