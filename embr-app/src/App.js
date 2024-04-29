@@ -4,8 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import SmokeLineGraph from "./smokeLineGraph";
 import TemperatureGraph from "./temperatureGraph";
 import CameraStream from "./fpvStream";
-import logo from "./res/Logo-01.png"
+import Navbar from "./Navbar";
 import CustomWebcam from "./CustomWebcam";
+import { Nav } from "react-bootstrap";
 
 function App() {
   const [gpsData, setGpsData] = useState(null);
@@ -31,25 +32,14 @@ function App() {
 
   return (
     //state to store MAVLink gps data
+    <>
+    <Navbar />
     
     <div className="dashboard-container">
-      <div className="row">
-      <div className="col-lg-3 justify-content-end logo-container">
-        <img src={logo} alt="Logo" className="logo float-right"/>
-      </div>
-      <div className="col-lg-6 title-container">
-        <h1 className="title">EMBR Dashboard</h1>
-      </div>
-      </div>
+      
       <div className="container-fluid h-100">
         {/* Page Title */}
-
         <div className="row">
-          {/* Smoke Graph */}
-          <div className="col smoke-graph-container ">
-            <SmokeLineGraph />
-          </div>
-
           {/* FPV camera feed */}
           <div className=" col fpv-container">
             <CustomWebcam />
@@ -58,6 +48,20 @@ function App() {
           <div className="col flir-container">
           <CameraStream />
           </div>
+        </div>
+
+        <div className="row">
+          
+        </div>
+
+
+        <div className="row">
+          {/* Smoke Graph */}
+          <div className="col smoke-graph-container ">
+            <SmokeLineGraph />
+          </div>
+
+          
           {/* Temperature camera feed */}
           <div className="col temp-graph-container">
             <TemperatureGraph />
@@ -81,6 +85,7 @@ function App() {
         </div>
       </div>
     </div>
+  </>
   );
 }
 
