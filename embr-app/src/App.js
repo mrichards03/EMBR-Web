@@ -42,7 +42,7 @@ function App() {
         <div className="row">
           {/* FPV camera feed */}
           <div className=" col fpv-container">
-            <CustomWebcam />
+            {/* <CustomWebcam /> */}
           </div>
           {/* Flir camera feed */}
           <div className="col flir-container">
@@ -57,7 +57,7 @@ function App() {
 
         <div className="row">
           {/* Smoke Graph */}
-          <div className="col smoke-graph-container ">
+          <div className="col smoke-graph-container">
             <SmokeLineGraph />
           </div>
 
