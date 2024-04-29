@@ -1,6 +1,60 @@
-# Getting Started with Create React App
+# Getting Started with EMBR Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The EMBR Dashboard is a web application designed to display real-time data from EMBR robot transmitted through MAVLink. EMBR is a robot that detect embers with the purpose of prevent wildfires. It provides a user-friendly interface for monitoring various parameters like GPS coordinates, temperature, and smoke levels.
+
+## Features 
+- Real-time display of GPS coordinates
+- Visualization of temperature data
+- Monitoring of smoke levels
+- Live camera feed from ground stations
+
+## Tecnologies Used
+### Frontend:
+React.js: JavaScript library for building user interfaces
+Bootstrap: Frontend framework for responsive design
+Fetch API: For making HTTP requests to the server
+
+### Backend
+Express.js: Web application framework for Node.js
+Serialport: Library for serial port communication. Access [https://www.npmjs.com/package/node-mavlink](https://www.npmjs.com/package/node-mavlink) to view instruction on how to install the library.
+Node.js: JavaScript runtime environment
+
+### Other
+MAVLink: Protocol for communicating with drones and ground control stations
+
+## Getting Started
+1. Clone the repository:
+```
+git clone https://github.com/your-username/embr-web.git
+```
+
+2. Install dependencies:
+```
+cd EMBR-Web
+npm install
+```
+
+3. Start the server
+```
+cd server
+npm start
+```
+
+4. Start the client
+```
+cd embr-app
+npm start
+```
+
+4. Open the web application in your browser: 
+```
+http://localhost:3000
+```
+
+## Usage
+1. Launch the web application in your browser.
+2. Ensure that the MAVLink-enabled device is connected to the server. If needed change the serialport number in the server.mjs file.
+3. The web application will display real-time data from the device, including GPS coordinates, temperature, and smoke levels.
 
 ## Available Scripts
 
@@ -8,10 +62,11 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode:
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
+The page will reload when you make changes.
 You may also see any lint errors in the console.
 
 ### `npm test`
