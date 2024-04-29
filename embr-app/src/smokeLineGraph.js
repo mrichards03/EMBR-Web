@@ -44,7 +44,7 @@ function SmokeLineGraph() {
           borderColor: '#EE2A24',
           backgroundColor: '#F8B522',
           pointBorderColor: '#EE2A24',
-          tension: 0.1
+          tension: 0.3
         }
       ]
       };
@@ -68,12 +68,29 @@ function SmokeLineGraph() {
               display: false,
               color: "transparent",
             },
+            ticks: {
+              // Customize y-axis ticks here
+              stepSize: 100000, // Example interval between ticks
+              callback: function(value, index, values) {
+                // Customize tick label formatting here
+                return value.toLocaleString(); // Example: Format tick labels with thousands separator
+              }
+            }
           },
           x: {
             gridLines: {
               display: false,
               color: "transparent",
             },
+            ticks: {
+              // Customize x-axis ticks here
+              // Example: Display every nth tick
+              stepSize: 10000000000000000,
+              callback: function(value, index, values) {
+                // Customize tick label formatting here
+                return value; // Example: Return the tick value as it is
+              }
+            }
           },
         },
         responsive: true,
