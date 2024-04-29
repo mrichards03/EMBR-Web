@@ -15,6 +15,8 @@ const CustomWebcam = () => {
     setImgSrc(null);
   };
 
+  
+
   return (
     <div className="container">
       {imgSrc ? (
