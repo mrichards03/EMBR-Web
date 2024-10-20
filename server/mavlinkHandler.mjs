@@ -61,6 +61,46 @@ function handleMavLinkData() {
   });
 }
 
+function handleSampleMavLinkData(){
+
+  console.log("Simulating MAVLink data...");
+
+  // simulate incoming data every 10 seconds
+  setInterval(() => {
+
+    // simulating REGISTRY[packet.header.msgid] above
+    const messageType = Math.random() > 0.5 ? "GLOBAL_POSITION_INT" : "NAMED_VALUE_FLOAT";
+    
+    if (messageType === "GLOBAL_POSITION_INT") {
+
+      const simulatedGlobalPositionData = {
+        timeBootMs: Date.now(),
+        lat: Math.floor(Math.random() * 180000000) - 90000000, // Simulated latitude
+        lon: Math.floor(Math.random() * 360000000) - 180000000, // Simulated longitude
+        alt: Math.random() * 10000, // Simulated altitude (in meters)
+        relative_alt: Math.random() * 5000, // Simulated relative altitude
+        vx: Math.random() * 100, // Simulated X speed
+        vy: Math.random() * 100, // Simulated Y speed
+        vz: Math.random() * 100, // Simulated Z speed
+        hdg: Math.random() * 36000, // Simulated heading (in centidegrees)
+      };
+
+      processGlobalPositionMessage(simulatedGlobalPositionData);
+
+    } else if (messageType === "NAMED_VALUE_FLOAT") {
+
+      const simulatedCustomData = {
+        timeBootMs: Date.now(),
+        name: "temp",
+        value: Math.random() * 100, 
+      };
+
+      processCustomMessage(simulatedCustomData);
+
+    }
+  }, 10000); // Every 10 seconds
+}
+
 //process gps coordinates and send to server
 function processGlobalPositionMessage(data) {
   const globalPositionData = {
@@ -99,4 +139,4 @@ function processCustomMessage(data) {
   }
 }
 
-export { handleMavLinkData };
+export { handleMavLinkData, handleSampleMavLinkData };
